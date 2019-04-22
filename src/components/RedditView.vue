@@ -11,7 +11,7 @@
                             <textarea class="form-control" rows="5" placeholder="topic content" @keyup="checklength" v-model="topic.content"></textarea>
                         </div>
                         <span>{{topic.content.length}} / 255</span>
-                        <button class="btn btn-info pull-right">Create Topic</button>
+                        <button class="btn btn-info pull-right" @click="submitTopic">Create Topic</button>
                     </div>
                 </div>
             </div>
@@ -35,6 +35,20 @@ export default {
         let content = this.topic.content.slice(0, 255)
         this.topic.content = content
       }
+    },
+    submitTopic () {
+      if(this.topic.title.length === 0) {
+        alert('title can`t empty')
+        return
+      }
+      if(this.topic.content.length === 0) {
+        alert('topic conent can`t empty')
+        return
+      }
+      // push topic list
+      this.topics.push(Object.assign({ upvote: 0, downvote: 0 }, this.topic))
+      // empty form content
+      this.topic = { title: '', content: '' }
     }
   }
 }
