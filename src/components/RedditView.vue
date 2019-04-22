@@ -14,6 +14,18 @@
                         <button class="btn btn-info pull-right" @click="submitTopic">Create Topic</button>
                     </div>
                 </div>
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-sm-12">
+                        <div class="list-group">
+                            <div class="list-group-item" v-for="(item, i) in topics" :key="i">
+                                <h4 class="list-group-item-heading">{{item.title}}</h4>
+                                <p class="list-group-item-text">{{item.content}}</p>
+                                <button style="margin: 5px" class="btn btn-default" type="submit" @click="item.upvote++"><i class="glyphicon glyphicon-triangle-top"></i> {{item.upvote}}</button> 
+                                <button style="margin: 5px" class="btn btn-default" type="submit" @click="item.downvote++"><i class="glyphicon glyphicon-triangle-bottom"></i> {{item.downvote}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
