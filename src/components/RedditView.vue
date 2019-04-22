@@ -20,7 +20,7 @@
                             <div class="list-group-item" v-for="(item, i) in topics" :key="i">
                                 <h4 class="list-group-item-heading">{{item.title}}</h4>
                                 <p class="list-group-item-text">{{item.content}}</p>
-                                <button style="margin: 5px" class="btn btn-default" type="submit" @click="item.upvote++"><i class="glyphicon glyphicon-triangle-top"></i> {{item.upvote}}</button> 
+                                <button style="margin: 5px" class="btn btn-default" type="submit" @click="upvote(i)"><i class="glyphicon glyphicon-triangle-top"></i> {{item.upvote}}</button> 
                                 <button style="margin: 5px" class="btn btn-default" type="submit" @click="item.downvote++"><i class="glyphicon glyphicon-triangle-bottom"></i> {{item.downvote}}</button>
                             </div>
                         </div>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   data () {
     return {
@@ -61,7 +62,17 @@ export default {
       this.topics.push(Object.assign({ upvote: 0, downvote: 0 }, this.topic))
       // empty form content
       this.topic = { title: '', content: '' }
+    },
+    upvote (index) {
+      this.topics[index].upvote++
+      this.debounced()
+    },
+    sorting () {
+      this.topics = _.orderBy(this.topics, ['upvote'], ['desc'])
     }
+  },
+  created () {
+    this.debounced = _.debounce(this.sorting, 2000)
   }
 }
 </script>
